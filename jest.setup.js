@@ -1,9 +1,23 @@
-const { CreateTableCommand, DeleteTableCommand, DynamoDBClient } = require('@aws-sdk/client-dynamodb')
-const { DynamoDBDocument, DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb')
+const { CreateTableCommand, DeleteTableCommand, DynamoDBClient, ListTablesCommand } = require('@aws-sdk/client-dynamodb')
+const { DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb')
+const { TableA } = require('./tables/tableA/TableA')
 
-const CreditedTableName = 'tableA'
+const createInstance = () => {
+  const client = new DynamoDBClient({
+    credentials: {
+      accessKeyId: 'DUMMYIDEXAMPLE',
+      secretAccessKey: 'DUMMYIDEXAMPLE',
+    },
+    endpoint: 'http://localhost:4566',
+    region: 'ap-northeast-1'
+  })
 
-// TODO ファイル毎に動いているので、一度だけ動くようにしたい
+  return {
+    client,
+  }
+}
+
+
 const createCommand = (tableName) => {
   return new CreateTableCommand({
     AttributeDefinitions: [
@@ -63,19 +77,10 @@ const deleteCommand = (tableName) => {
   })
 }
 
-const deleteCreditedTableCommand = deleteCommand(CreditedTableName)
-const createCreditedTableCommand = createCommand(CreditedTableName)
-
-const createInstance = () => {
-  const client = new DynamoDBClient({
-    endpoint: 'http://localhost:8888',
-    region: 'ap-northeast-1',
-  })
-
-  return {
-    client,
-  }
+const listTablesCommand = () => {
+  return new ListTablesCommand({})
 }
+
 
 beforeAll(async () => {
   const marshallOptions = {
@@ -85,33 +90,15 @@ beforeAll(async () => {
 
   const { client } = createInstance()
 
-  await client
-    .send(deleteCreditedTableCommand)
-    .catch((error) => {
-      // console.log('deleteCreditedTableCommand', error.message)
-    })
-    .finally(async () => {
-      await client
-        .send(createCreditedTableCommand)
-        .catch((error) => {
-          console.log(error)
-          // console.log('createCreditedTableCommand', error.message)
-        })
-        .finally(() => {
-          globalThis.DocumentClient = DynamoDBDocumentClient.from(client, translateConfig)
-          globalThis.DynamoDBDocument = DynamoDBDocument.from(client, translateConfig)
-        })
-    })
-}, 10_000)
+  TableA.name = TableA.name + process.env.JEST_WORKER_ID
 
-// afterAll(async () => {
-//   const { client } = createInstance()
-//
-//   await client.send(deleteCreditedTableCommand).catch((error) =>{
-//     // console.log('afterAll deleteCreditedTableCommand', error.message)
-//   })
-//
-//   await client.send(deleteEventTableCommand).catch((error) => {
-//     // console.log('afterAll deleteEventTableCommand', error.message)
-//   })
-// })
+  const { TableNames } = await client.send(listTablesCommand())
+
+  if (TableNames.includes(TableA.name)) {
+    const deleteCreditedTableCommand = deleteCommand(TableA.name)
+    await client.send(deleteCreditedTableCommand)
+  }
+  const createCreditedTableCommand = createCommand(TableA.name)
+  await client.send(createCreditedTableCommand)
+  TableA.DocumentClient = DynamoDBDocumentClient.from(client, translateConfig)
+})
