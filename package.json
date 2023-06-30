@@ -12,7 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.359.0",
     "@aws-sdk/lib-dynamodb": "3.359.0",
-    "dynamodb-toolbox": "0.8.5"
+    "dynamodb-toolbox": "1.0.0-beta.0"
   },
   "devDependencies": {
     "@swc/jest": "0.2.26",

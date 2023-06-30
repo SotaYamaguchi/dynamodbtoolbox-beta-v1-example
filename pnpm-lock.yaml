@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@aws-sdk/client-dynamodb':
     specifier: 3.359.0
@@ -12,8 +8,8 @@ dependencies:
     specifier: 3.359.0
     version: 3.359.0(@aws-sdk/client-dynamodb@3.359.0)(@aws-sdk/smithy-client@3.358.0)(@aws-sdk/types@3.357.0)
   dynamodb-toolbox:
-    specifier: 0.8.5
-    version: 0.8.5(@aws-sdk/client-dynamodb@3.359.0)(@aws-sdk/lib-dynamodb@3.359.0)
+    specifier: 1.0.0-beta.0
+    version: 1.0.0-beta.0(@aws-sdk/client-dynamodb@3.359.0)(@aws-sdk/lib-dynamodb@3.359.0)
 
 devDependencies:
   '@swc/jest':
@@ -2612,8 +2608,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /dynamodb-toolbox@0.8.5(@aws-sdk/client-dynamodb@3.359.0)(@aws-sdk/lib-dynamodb@3.359.0):
-    resolution: {integrity: sha512-cCoZ19SX16tcd14I/V1Eh3VNthvk7xneSJkcsUsDiLMuP+97WGH9Q1SdfAn8rRjOXS71noguZL3hBz9QFI5mRw==}
+  /dynamodb-toolbox@1.0.0-beta.0(@aws-sdk/client-dynamodb@3.359.0)(@aws-sdk/lib-dynamodb@3.359.0):
+    resolution: {integrity: sha512-ClSnGA/4/2SmlNwOhKGvpxDHVdG4ghtvMotxW+I/IwynM8Cxl3M0jxFOvqmw7pTc/CIVCeuarmWTxXAlvqYxWg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@aws-sdk/client-dynamodb': ^3.0.0
@@ -2622,6 +2618,9 @@ packages:
       '@aws-sdk/client-dynamodb': 3.359.0
       '@aws-sdk/lib-dynamodb': 3.359.0(@aws-sdk/client-dynamodb@3.359.0)(@aws-sdk/smithy-client@3.358.0)(@aws-sdk/types@3.357.0)
       deep-copy: 1.4.2
+      lodash.clonedeep: 4.5.0
+      lodash.isempty: 4.4.0
+      lodash.isequal: 4.5.0
       ts-toolbelt: 9.6.0
     dev: false
 
@@ -4377,6 +4376,18 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.clonedeep@4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: false
+
+  /lodash.isempty@4.4.0:
+    resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
+    dev: false
+
+  /lodash.isequal@4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    dev: false
+
   /lodash.memoize@4.1.2:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
     dev: true
@@ -5495,3 +5506,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
